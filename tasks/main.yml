@@ -8,3 +8,6 @@
 
 - include: haproxy.yml
   when: enable_haproxy
+
+- include: config_squid_transparent_proxy.yml
+    when: squid_transparent_proxy is defined and squid_transparent_proxy

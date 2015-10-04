@@ -1479,7 +1479,12 @@ icp_access allow {{ squid_icp_access }}
 #
 
 # Squid normally listens to port 3128
+{% if (squid_transparent_proxy is defined and not squid_transparent_proxy) or squid_transparent_proxy is not defined %}
 http_port {{ squid_http_port }}
+{% endif %}
+{% if squid_transparent_proxy is defined and squid_transparent_proxy %}
+http_port {{ squid_http_port }} transparent
+{% endif %}
 
 #  TAG: https_port
 # Note: This option is only available if Squid is rebuilt with the
