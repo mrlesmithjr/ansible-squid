@@ -2,6 +2,9 @@
 # {{ ansible_managed }}
 table nat{
     chain PREROUTING {
-        proto tcp dport 80 DNAT to 127.0.0.1:{{ squid_http_port }};
+        proto tcp dport http REDIRECT to-ports {{ squid_http_port }};
+    }
+    chain POSTROUTING {
+
     }
 }
