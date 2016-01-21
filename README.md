@@ -9,6 +9,18 @@ Requirements
 If you want to use haproxy and/or keepalived you will need to install the roles under dependencies and configure each role.
 Each role (haproxy, keepalived and squid) should be configured using group_vars/group and host_vars/host. Ensure correct configurations within each role. If you only require squid then you may disregard the haproxy and keepalived roles.
 
+Install all Ansible role requirements.
+````
+sudo ansible-galaxy install -r requirements.yml -f
+````
+
+Vagrant
+-------
+Spin up Environment under Vagrant to test.
+````
+vagrant up
+````
+
 Role Variables
 --------------
 
@@ -49,6 +61,8 @@ Dependencies
 ------------
 
 ````
+ansible-haproxy
+ansible-keepalived
 mrlesmithjr.haproxy
 mrlesmithjr.keepalived
 ````
@@ -56,13 +70,37 @@ mrlesmithjr.keepalived
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+#### GitHub
+````
+- hosts: all
+  become: true
+  vars:
+    - enable_haproxy: false
+    - enable_keepalived: false
+  roles:
+    - role: ansible-haproxy
+      when: enable_haproxy is defined and enable_haproxy
+    - role: ansible-keepalived
+      when: enable_keepalived is defined and enable_keepalived
+    - role: ansible-squid
+  tasks:
+````
 
-    - hosts: servers
-      roles:
-         - { role: mrlesmithjr.haproxy, when: enable_haproxy }
-         - { role: mrlesmithjr.keepalived, when: enable_keepalived }
-         - { role: mrlesmithjr.squid }
+#### Galaxy
+````
+- hosts: all
+  become: true
+  vars:
+    - enable_haproxy: false
+    - enable_keepalived: false
+  roles:
+    - role: mrlesmithjr.haproxy
+      when: enable_haproxy is defined and enable_haproxy
+    - role: mrlesmithjr.keepalived
+      when: enable_keepalived is defined and enable_keepalived
+    - role: mrlesmithjr.squid
+  tasks:
+````
 
 License
 -------
