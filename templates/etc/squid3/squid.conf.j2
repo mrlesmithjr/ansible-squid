@@ -2276,7 +2276,7 @@ http_port {{ squid_http_port }} transparent
 #			See ICP and HTCP options below for additional details.
 #
 #
-{% if squid_cache_peering %}
+{% if squid_cache_peering is defined %}
 # {{ ansible_managed }}
 {%   for item in squid_cache_peer %}
 {%     if item.host != ansible_hostname and item.domain is defined %}
