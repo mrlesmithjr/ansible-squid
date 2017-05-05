@@ -61,9 +61,6 @@ squid_cache_peer: []
 
 squid_cache_peering: false
 
-# Defines if haproxy should be installed
-squid_enable_haproxy: false
-
 squid_http_access:
   - action: 'deny'
     acl:
