@@ -15,3 +15,13 @@
   when: >
         squid_transparent_proxy and
         squid_transparent_proxy_ferm
+
+- name: Enable Squid includes in conf.d
+  file:
+    path: "{{ squid_root_dir }}/conf.d"
+    state: directory
+
+- name: Create dummy.conf
+  template:
+    src: etc/squid/conf.d/dummy.conf.j2
+    dest: "{{ squid_root_dir }}/conf.d/dummy.conf"

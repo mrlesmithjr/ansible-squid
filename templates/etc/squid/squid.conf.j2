@@ -51,3 +51,6 @@ cache_peer {{ item.host }} {{ item.type }} {{ item.proxy_port}} {{ item.icp_port
 {%     endif %}
 {%   endfor %}
 {% endif %}
+
+# Include additional configuration files
+include {{ squid_root_dir }}/conf.d/*.conf
