@@ -3,12 +3,10 @@
 
 # acl aclname acltype argument
 squid_acl:
-  - name: 'SSL_ports'
-    type: 'port'
-    arg: '443'
   - name: 'CONNECT'
     type: 'method'
     arg: 'CONNECT'
+
 
 # Adapt to list your (internal) IP networks from where browsing
 # should be allowed
@@ -16,6 +14,10 @@ squid_acl_localnet:
   - '10.0.0.0/8'
   - '172.16.0.0/16'
   - '192.168.0.0/16'
+
+squid_acl_ssl_ports:
+  - port: '443'
+    comment: 'https'
 
 squid_acl_safeports:
   - port: '21'

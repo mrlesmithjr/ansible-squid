@@ -7,6 +7,13 @@ acl {{ item['name'] }} {{ item['type'] }} {{ item['arg'] }}
 {%   endfor %}
 {% endif %}
 
+# SSL_ports
+{% if squid_acl_ssl_ports is defined and squid_acl_ssl_ports != [] %}
+{%   for item in squid_acl_ssl_ports %}
+acl SSL_ports port {{ item['port'] }}{% if item['comment'] is defined %} #{{ item['comment'] }} {% endif %}
+{%   endfor %}
+{% endif %}
+
 # Local Networks
 {% if squid_acl_localnet is defined and squid_acl_localnet != [] %}
 {%   for item in squid_acl_localnet %}
