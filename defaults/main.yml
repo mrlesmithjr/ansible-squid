@@ -1,6 +1,15 @@
 ---
 # defaults file for ansible-squid
 
+# squid auth parameters  
+# squid_auth_param:
+#   - name: 'basic'
+#     type: 'program'
+#     arg: '/usr/lib/squid3/basic_ncsa_auth /etc/squid/htpasswd'
+#   - name: 'basic'
+#     type: 'realm'
+#     arg: 'Authentication REQUIRED'
+
 # acl aclname acltype argument
 squid_acl:
   - name: 'SSL_ports'
