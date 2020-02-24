@@ -2,6 +2,6 @@
 - name: redhat | Installing Squid (Non-Fedora)
   yum:
     name: "{{ squid_package }}"
-    state: "present"
+    state: present
   become: true
   when: ansible_distribution != "Fedora"
