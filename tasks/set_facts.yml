@@ -1,11 +1,10 @@
 ---
-- name: set_facts | Setting CentOS Facts
+- name: set_facts | Setting RedHat Facts
   set_fact:
     squid_package: squid
     squid_root_dir: /etc/squid
     squid_service: squid
-  when:
-    - ansible_distribution == "CentOS" or ansible_distribution == "Amazon"
+  when: ansible_os_family == "RedHat"
 
 - name: set_facts | Setting Debian <= 8 Facts
   set_fact:

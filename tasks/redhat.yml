@@ -5,3 +5,10 @@
     state: present
   become: true
   when: ansible_distribution != "Fedora"
+
+- name: redhat | Installing Squid (Fedora)
+  dnf:
+    name: "{{ squid_package }}"
+    state: present
+  become: true
+  when: ansible_distribution == "Fedora"
