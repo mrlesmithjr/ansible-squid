@@ -1,57 +1,42 @@
-Role Name
-=========
+# ansible-squid
 
-An [Ansible] role to install/configure [Squid]
-* Configurable and cache peering
+Ansible role to install/configure Squid Proxy
 
-Requirements
-------------
+## Build Status
 
-If you want to use haproxy and/or keepalived you will need to install the roles
-under dependencies and configure each role. Each role
-(haproxy, keepalived and squid) should be configured using group_vars/group
-and host_vars/host. Ensure correct configurations within each role. If you
-only require squid then you may disregard the haproxy and keepalived roles.
+### GitHub Actions
 
-Install all [Ansible] [role requirements](./requirements.yml).
+![Molecule Test](https://github.com/mrlesmithjr/ansible-squid/workflows/Molecule%20Test/badge.svg)
 
-```
-sudo ansible-galaxy install -r requirements.yml -f
-```
+### Travis CI
 
-Vagrant
--------
-Spin up Environment under Vagrant to test.
-```
-vagrant up
-```
+[![Build Status](https://travis-ci.org/mrlesmithjr/ansible-squid.svg?branch=master)](https://travis-ci.org/mrlesmithjr/ansible-squid)
 
-Role Variables
---------------
+## Requirements
 
-[Role Defaults](defaults/main.yml)
+For any required Ansible roles, review:
+[requirements.yml](requirements.yml)
 
-Dependencies
-------------
+## Role Variables
 
+[defaults/main.yml](defaults/main.yml)
 
-Example Playbook
-----------------
+## Dependencies
 
-[Example Playbook](./playbook.yml)
+## Example Playbook
 
-License
--------
+[playbook.yml](playbook.yml)
 
-BSD
+## License
 
-Author Information
-------------------
+MIT
+
+## Author Information
 
 Larry Smith Jr.
-- @mrlesmithjr
-- http://everythingshouldbevirtual.com
-- mrlesmithjr [at] gmail.com
 
-[Ansible]: <https://www.ansible.com>
-[Squid]: <http://www.squid-cache.org/>
+- [@mrlesmithjr](https://twitter.com/mrlesmithjr)
+- [mrlesmithjr@gmail.com](mailto:mrlesmithjr@gmail.com)
+- [http://everythingshouldbevirtual.com](http://everythingshouldbevirtual.com)
+
+> NOTE: Repo has been created/updated using [https://github.com/mrlesmithjr/cookiecutter-ansible-role](https://github.com/mrlesmithjr/cookiecutter-ansible-role) as a template.
