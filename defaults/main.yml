@@ -138,4 +138,4 @@ squid_transparent_proxy: false
 squid_transparent_proxy_ferm: false
 
 # Defines how much time squid should wait before reboot
-squid_shutdown_lifetime: 5
+squid_shutdown_lifetime: 30 seconds
