@@ -12,6 +12,6 @@
 - include: config_squid.yml
 
 - include: config_squid_transparent_proxy.yml
-  when: >
-        squid_transparent_proxy and
-        squid_transparent_proxy_ferm
+  when:
+    - squid_transparent_proxy
+    - squid_transparent_proxy_ferm

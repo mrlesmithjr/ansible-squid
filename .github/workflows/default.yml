@@ -1,0 +1,36 @@
+---
+name: Molecule Test
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.5, 3.6, 3.7]
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          path: ansible-squid
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          sudo apt install docker
+          python -m pip install --upgrade pip
+          pip3 install -r requirements.txt
+          ansible --version
+          molecule --version
+      - name: Test with molecule
+        run: |
+          molecule test --scenario-name centos7
+          # molecule test --scenario-name centos8
+          # molecule test --scenario-name debian8
+          molecule test --scenario-name debian9
+          molecule test --scenario-name debian10
+          molecule test --scenario-name fedora
+          molecule test --scenario-name ubuntu1604
+          molecule test --scenario-name ubuntu1804

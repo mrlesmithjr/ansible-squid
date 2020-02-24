@@ -1,10 +1,10 @@
-# {{ ansible_managed }}
+{{ ansible_managed|comment }}
 
 {% if squid_auth_param is defined %}
 # AUTH_PARAM
-{% for item in squid_auth_param %}
+{%   for item in squid_auth_param %}
 auth_param {{ item['name'] }} {{ item['type'] }} {{ item['arg']}}
-{% endfor %}
+{%   endfor %}
 {% endif %}
 
 {% if squid_acl is defined and squid_acl != [] %}
