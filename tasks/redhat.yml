@@ -4,6 +4,8 @@
     name: "{{ squid_package }}"
     state: present
   become: true
+  register: result
+  until: result is successful
   when: ansible_distribution != "Fedora"
 
 - name: redhat | Installing Squid (Fedora)
@@ -11,4 +13,6 @@
     name: "{{ squid_package }}"
     state: present
   become: true
+  register: result
+  until: result is successful
   when: ansible_distribution == "Fedora"
