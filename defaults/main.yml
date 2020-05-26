@@ -156,3 +156,11 @@ squid_shutdown_lifetime: 30 seconds
 
 # Defines if squid version might be suppressed on error messages
 squid_suppress_version: true
+
+# Supply extra configuration - eg lists of domains or IPs
+# These are templated so can be populated with values from Ansible
+# NOTE: If this you override this you need to re-specify this entry
+squid_config_files:
+  - name: squid.conf
+    source: etc/squid/squid.conf.j2
+
