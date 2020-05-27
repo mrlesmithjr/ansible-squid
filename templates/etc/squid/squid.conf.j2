@@ -49,6 +49,11 @@ http_port {{ squid_http_port }}
 {% elif squid_transparent_proxy is defined and squid_transparent_proxy %}
 http_port {{ squid_http_port }} transparent
 {% endif %}
+
+{% if squid_https_enabled is defined and squid_https_enabled %}
+https_port {{ squid_https_port }} cert={{ squid_cert_filename }} key={{ squid_key_filename }}
+{% endif %}
+
 {% if squid_cache_peering %}
 {%   for item in squid_cache_peer %}
 {%     if item.host != ansible_hostname and item.domain is defined %}
@@ -61,4 +66,8 @@ cache_peer {{ item.host }} {{ item.type }} {{ item.proxy_port}} {{ item.icp_port
 
 {% if squid_shutdown_lifetime is defined %}
 shutdown_lifetime {{squid_shutdown_lifetime}}{% else %}
+{% endif %}
+
+{% if (squid_suppress_version is defined and squid_suppress_version) or squid_suppress_version is not defined %}
+httpd_suppress_version_string on
 {% endif %}
