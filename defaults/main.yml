@@ -98,6 +98,17 @@ squid_http_access:
 
 squid_http_port: 3128
 
+# Define if squid should listen over HTTPS, as well as certificate files to be used
+# NOTE: If you plan to enable it, you're supposed to generate certificates by yourself
+#       and place it in the appropriate directory.
+#       As a suggestion, you could use a selfsigned certificate if proxy will listen'
+#       on a private IP, or use a automated script (like certbot) to generate valid
+#       public certificate.
+squid_https_enabled: false
+squid_https_port: 3129
+squid_cert_filename: /etc/squid/cert.pem
+squid_key_filename: /etc/squid/cert.key
+
 squid_icp_access: all
 
 squid_icp_port: 3130
@@ -139,3 +150,6 @@ squid_transparent_proxy_ferm: false
 
 # Defines how much time squid should wait before reboot
 squid_shutdown_lifetime: 30 seconds
+
+# Defines if squid version might be suppressed on error messages
+squid_suppress_version: true
