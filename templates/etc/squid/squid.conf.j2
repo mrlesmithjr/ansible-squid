@@ -1,5 +1,9 @@
 {{ ansible_managed|comment }}
 
+{% if squid_dns_nameservers is defined %}
+dns_nameservers {{ squid_dns_nameservers }}
+{% endif %}
+
 {% if squid_auth_param is defined %}
 # AUTH_PARAM
 {%   for item in squid_auth_param %}

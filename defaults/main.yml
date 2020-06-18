@@ -1,6 +1,9 @@
 ---
 # defaults file for ansible-squid
 
+# Example of DNS server to query
+# squid_dns_nameservers: 127.0.0.1
+
 # squid auth parameters
 squid_auth_param: []
 # - name: basic
