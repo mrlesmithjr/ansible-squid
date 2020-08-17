@@ -4,6 +4,25 @@
 dns_nameservers {{ squid_dns_nameservers }}
 {% endif %}
 
+{% if squid_debug_options is defined %}
+# Log verbosity
+debug_options {{ squid_debug_options }}
+{% endif %}
+
+{% if squid_log_format is defined and squid_log_format != [] %}
+# Log format
+{%   for item in squid_log_format %}
+logformat {{ item['name'] }} {{ item['format']}}
+{%   endfor %}
+{% endif %}
+
+{% if squid_access_log is defined and squid_access_log != [] %}
+# Access log location and format
+{%   for item in squid_access_log %}
+access_log {{ item['filename'] }} {{ item['format'] |default('squid')}}
+{%   endfor %}
+{% endif %}
+
 {% if squid_auth_param is defined %}
 # AUTH_PARAM
 {%   for item in squid_auth_param %}
