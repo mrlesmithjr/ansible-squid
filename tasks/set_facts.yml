@@ -6,7 +6,7 @@
     squid_service: squid
   when: ansible_os_family == "RedHat"
 
-- name: set_facts | Setting Debian <= 8 Facts
+- name: set_facts | Setting Debian < 9 Facts
   set_fact:
     squid_package: squid3
     squid_root_dir: /etc/squid3
@@ -22,7 +22,7 @@
     squid_service: squid
   when:
     - ansible_distribution == "Debian"
-    - ansible_distribution_version is version('8', '>')
+    - ansible_distribution_version is version('9', '>=')
 
 - name: set_facts | Setting Ubuntu < 16.04 Facts
   set_fact:
