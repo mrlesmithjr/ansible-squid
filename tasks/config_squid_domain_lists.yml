@@ -16,6 +16,6 @@
     mode: 0644
   become: true
   with_items:
-    - squid_domain_blacklist_file
-    - squid_domain_whitelist_file
+    - "{{ squid_domain_blacklist_file }}"
+    - "{{ squid_domain_whitelist_file }} "
   notify: "restart {{ squid_service }}"
