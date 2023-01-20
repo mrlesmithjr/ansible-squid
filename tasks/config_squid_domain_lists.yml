@@ -9,7 +9,7 @@
 
 - name: config_squid_domain_lists | Configure domain lists
   template:
-    src: "domain_lists/{{ item }}.j2"
+    src: "squid/domain_lists/{{ item }}.j2"
     dest: "{{ squid_domain_lists_dir }}{{ item }}"
     owner: "root"
     group: "root"
