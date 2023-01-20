@@ -61,6 +61,16 @@ squid_cache_peer: []
  #   icp_port: '{{ squid_icp_port }}'
  #   options: default
 
+# This sets up domain whielist and blacklist support files.
+squid_domain_lists_dir: "{ squid_root_dir }}/domain_lists"
+squid_domain_blacklist_file: domain_blacklist
+squid_domain_whitelist_file: domain_whitelist
+
+# This will be setup via invoking playbook
+squid_domain_whitelist: []
+squid_domain_blacklist: []
+
+
 squid_cache_peering: false
 
 squid_http_access:
@@ -71,6 +81,10 @@ squid_http_access:
     acl:
       - 'CONNECT'
       - '!SSL_ports'
+  - action: 'deny'
+    acl:
+      - all
+      - domain_blacklist
   - action: 'allow'
     acl:
       - 'localhost'
@@ -84,6 +98,10 @@ squid_http_access:
   - action: 'allow'
     acl:
       - 'localnet'
+  - action: 'allow'
+    acl:
+      - all
+      - domain_whitelist
   - action: 'deny'
     acl:
       - 'all'

@@ -1,0 +1,21 @@
+---
+- name: config_squid_domain_lists | Ensure Squid domain lists directory
+  file:
+    path: "{{ squid_domain_lists_dir }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: 0755
+
+- name: config_squid_domain_lists | Configure domain lists
+  template:
+    src: "domain_lists/{{ item }}.j2"
+    dest: "{{ squid_domain_lists_dir }}{{ item }}"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  with_items:
+    - squid_domain_blacklist_file
+    - squid_domain_whitelist_file
+  notify: "restart {{ squid_service }}"

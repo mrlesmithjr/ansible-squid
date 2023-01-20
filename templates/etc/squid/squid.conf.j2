@@ -1,5 +1,15 @@
 # {{ ansible_managed }}
 
+# Domain blacklisting/whitelisting
+
+{% if squid_domain_blacklist_file is defined and squid_acl != "" %}
+acl domain_blacklist dstdomain "{{ squid_domain_blacklist_file }}"
+{% endif %}
+
+{% if squid_domain_whitelist_file is defined and squid_acl != "" %}
+acl domain_whitelist dstdomain "{{ squid_domain_whitelist_file }}"
+{% endif %}
+
 # ACLS
 {% if squid_acl is defined and squid_acl != [] %}
 {%   for item in squid_acl %}
