@@ -26,6 +26,6 @@
     src: etc/squid/conf.d/dummy.conf.j2
     dest: "{{ squid_root_dir }}/conf.d/dummy.conf"
 
-- Name: Setup domain lists (black and white)
-  include: config_squid_domain_lists
+- name: Setup domain lists (black and white)
+  include: config_squid_domain_lists.yml
   when: squid_domain_lists_dir != ""
