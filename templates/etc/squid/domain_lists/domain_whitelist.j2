@@ -1,4 +1,4 @@
-{% if squid_domain_whitelist is defined%}
+{% if squid_domain_whitelist is defined and squid_domain_whitelist is iterable%}
 {% for domain in squid_domain_whitelist %}
 {{ domain }}
 {% endfor %}
