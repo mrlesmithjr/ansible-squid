@@ -81,6 +81,10 @@ squid_http_access:
     acl:
       - 'CONNECT'
       - '!SSL_ports'
+  - action: 'allow'
+    acl:
+      - all
+      - domain_whitelist
   - action: 'deny'
     acl:
       - all
@@ -98,10 +102,6 @@ squid_http_access:
   - action: 'allow'
     acl:
       - 'localnet'
-  - action: 'allow'
-    acl:
-      - all
-      - domain_whitelist
   - action: 'deny'
     acl:
       - 'all'
