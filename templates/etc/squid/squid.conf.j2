@@ -43,7 +43,7 @@ acl Safe_ports port {{ item['port'] }}{% if item['comment'] is defined %} #{{ it
 {% elif 'domain_whitelist' in item['acl'] and (squid_domain_whitelist_file is not defined or squid_domain_whitelist != []) %}
 {% else %}
 http_access {{ item['action'] }} {{ item['acl']|join(' ') }}
-{%% endif %}
+{% endif %}
 {%   endfor %}
 {% endif %}
 
