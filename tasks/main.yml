@@ -30,5 +30,5 @@
   include: config_squid_domain_lists.yml
   when: >
     squid_domain_lists_dir != "" and
-    (squid_domain_blacklist_file is defined or
-    squid_domain_whitelist_file is defined)
+    (squid_domain_blacklist_file | length > 0 ) or
+    squid_domain_whitelist_file | length > 0 )

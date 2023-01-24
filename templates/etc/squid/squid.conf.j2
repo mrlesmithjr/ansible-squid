@@ -39,8 +39,8 @@ acl Safe_ports port {{ item['port'] }}{% if item['comment'] is defined %} #{{ it
 
 {% if squid_http_access is defined and squid_http_access != [] %}
 {%   for item in squid_http_access %}
-{% if 'domain_blacklist' in item['acl'] and (squid_domain_blacklist_file is not defined or squid_domain_blacklist == []) %}
-{% elif 'domain_whitelist' in item['acl'] and (squid_domain_whitelist_file is not defined or squid_domain_whitelist == []) %}
+{% if 'domain_blacklist' in item['acl'] and (squid_domain_blacklist_file | length == 0  or squid_domain_blacklist == []) %}
+{% elif 'domain_whitelist' in item['acl'] and (squid_domain_whitelist_file | length == 0 or squid_domain_whitelist == []) %}
 {% else %}
 http_access {{ item['action'] }} {{ item['acl']|join(' ') }}
 {% endif %}
