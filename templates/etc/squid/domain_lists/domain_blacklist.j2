@@ -1,0 +1,5 @@
+{% if squid_domain_blacklist is defined and squid_domain_blacklist is iterable %}
+{% for domain in squid_domain_blacklist %}
+{{ domain }}
+{% endfor %}
+{% endif %}

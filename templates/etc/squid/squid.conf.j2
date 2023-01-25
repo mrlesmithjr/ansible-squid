@@ -1,5 +1,13 @@
 # {{ ansible_managed }}
 
+# Domain blacklisting/whitelisting
+{% if squid_domain_blacklist_file is defined and squid_domain_blacklist != [] %}
+acl domain_blacklist dstdomain "{{ squid_domain_lists_dir }}/{{ squid_domain_blacklist_file }}"
+{% endif %}
+{% if squid_domain_whitelist_file is defined and squid_domain_whitelist != [] %}
+acl domain_whitelist dstdomain "{{ squid_domain_lists_dir }}/{{ squid_domain_whitelist_file }}"
+{% endif %}
+
 # ACLS
 {% if squid_acl is defined and squid_acl != [] %}
 {%   for item in squid_acl %}
@@ -31,7 +39,11 @@ acl Safe_ports port {{ item['port'] }}{% if item['comment'] is defined %} #{{ it
 
 {% if squid_http_access is defined and squid_http_access != [] %}
 {%   for item in squid_http_access %}
+{% if 'domain_blacklist' in item['acl'] and (squid_domain_blacklist_file | length == 0  or squid_domain_blacklist == []) %}
+{% elif 'domain_whitelist' in item['acl'] and (squid_domain_whitelist_file | length == 0 or squid_domain_whitelist == []) %}
+{% else %}
 http_access {{ item['action'] }} {{ item['acl']|join(' ') }}
+{% endif %}
 {%   endfor %}
 {% endif %}
 
