@@ -1,17 +1,22 @@
 ---
 # tasks file for ansible-squid
 
-- include: set_facts.yml
+- name: Set facts
+  ansible.builtin.include_tasks: set_facts.yml
 
-- include: debian.yml
+- name: Execute Debian tasks
+  ansible.builtin.include_tasks: debian.yml
   when: ansible_os_family == "Debian"
 
-- include: redhat.yml
+- name: Execute RHEL tasks
+  ansible.builtin.include_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
 
-- include: config_squid.yml
+- name: Configure Squid
+  ansible.builtin.include_tasks: config_squid.yml
 
-- include: config_squid_transparent_proxy.yml
+- name: Configure Squid transparent proxy
+  ansible.builtin.include_tasks: config_squid_transparent_proxy.yml
   when:
     - squid_transparent_proxy
     - squid_transparent_proxy_ferm

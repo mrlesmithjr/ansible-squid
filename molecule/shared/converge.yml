@@ -1,7 +1,4 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: Include ansible-squid
-      include_role:
-        name: ansible-squid
+  tasks: []

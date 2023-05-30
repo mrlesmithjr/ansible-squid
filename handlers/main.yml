@@ -1,29 +1,30 @@
 ---
 # handlers file for ansible-squid
 - name: restart squid
-  service:
+  ansible.builtin.service:
     name: squid
     state: restarted
   become: true
 
 - name: restart squid3
-  service:
+  ansible.builtin.service:
     name: squid3
     state: restarted
   become: true
 
 - name: reload haproxy
-  service:
+  ansible.builtin.service:
     name: haproxy
     state: reloaded
   become: true
 
 - name: restart haproxy
-  service:
+  ansible.builtin.service:
     name: haproxy
     state: restarted
   become: true
 
-- name: reload ferm # noqa 303 305
-  shell: service ferm force-reload
+- name: reload ferm # noqa command-instead-of-module command-instead-of-shell
+  ansible.builtin.shell: service ferm force-reload
+  changed_when: false
   become: true

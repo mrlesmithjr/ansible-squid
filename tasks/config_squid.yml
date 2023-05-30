@@ -1,7 +1,6 @@
 ---
-
 - name: config_squid | Configuring Squid
-  template:
+  ansible.builtin.template:
     src: "{{ item.source }}"
     dest: "{{ squid_root_dir }}/{{ item.name }}"
     owner: root
