@@ -1,6 +1,6 @@
 ---
 - name: redhat | Installing Squid (Non-Fedora)
-  yum:
+  ansible.builtin.yum:
     name: "{{ squid_package }}"
     state: present
   become: true
@@ -9,7 +9,7 @@
   when: ansible_distribution != "Fedora"
 
 - name: redhat | Installing Squid (Fedora)
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ squid_package }}"
     state: present
   become: true

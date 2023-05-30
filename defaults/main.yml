@@ -163,4 +163,3 @@ squid_suppress_version: true
 squid_config_files:
   - name: squid.conf
     source: etc/squid/squid.conf.j2
-
