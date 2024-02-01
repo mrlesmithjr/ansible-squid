@@ -1,4 +1,21 @@
 ---
+- name: config_squid | Configuring Squid for parsing
+  ansible.builtin.template:
+    src: "{{ item.source }}"
+    dest: "{{ squid_root_dir }}/{{ item.name }}-staged"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  loop: "{{ squid_config_files }}"
+  become: true
+
+- name: config_squid | Check configuration validity
+  ansible.builtin.command: "{{ squid_service }} -k parse -f {{ squid_root_dir }}/{{ item.name }}-staged"
+  loop: "{{ squid_config_files }}"
+  when: item.name is match("squid.*")
+  become: true
+  changed_when: false
+
 - name: config_squid | Configuring Squid
   ansible.builtin.template:
     src: "{{ item.source }}"
