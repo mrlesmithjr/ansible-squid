@@ -8,9 +8,19 @@
     mode: u=rw,g=r,o=r
   loop: "{{ squid_config_files }}"
   become: true
+  changed_when: false
 
 - name: config_squid | Check configuration validity
   ansible.builtin.command: "{{ squid_service }} -k parse -f {{ squid_root_dir }}/{{ item.name }}-staged"
+  loop: "{{ squid_config_files }}"
+  when: item.name is match("squid.*")
+  become: true
+  changed_when: false
+
+- name: config_squid | Clean staged config squid file
+  ansible.builtin.file:
+    state: absent
+    path: "{{ squid_root_dir }}/{{ item.name }}-staged"
   loop: "{{ squid_config_files }}"
   when: item.name is match("squid.*")
   become: true
