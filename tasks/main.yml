@@ -15,8 +15,8 @@
 - name: Configure Squid
   ansible.builtin.include_tasks: config_squid.yml
 
-- name: Configure Squid transparent proxy
+- name: Configure Squid intercept proxy
   ansible.builtin.include_tasks: config_squid_transparent_proxy.yml
   when:
-    - squid_transparent_proxy
+    - squid_http.intercept
     - squid_transparent_proxy_ferm

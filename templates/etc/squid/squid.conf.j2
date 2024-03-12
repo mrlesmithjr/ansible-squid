@@ -51,12 +51,6 @@ acl Safe_ports port {{ item['port'] }}{% if item['comment'] is defined %} #{{ it
 {%   endfor %}
 {% endif %}
 
-{% if squid_ssl_bump is defined and squid_ssl_bump != [] %}
-{%   for item in squid_ssl_bump %}
-ssl_bump {{ item['action'] }} {{ item['acl']|join(' ') }}
-{%   endfor %}
-{% endif %}
-
 {% if squid_http_access is defined and squid_http_access != [] %}
 {%   for item in squid_http_access %}
 http_access {{ item['action'] }} {{ item['acl']|join(' ') }}
@@ -69,21 +63,35 @@ refresh_pattern {{ item['regex'] }} {{ item['min'] }} {{ item['percent'] }} {{ i
 {%   endfor %}
 {% endif %}
 
+# HTTP
+http_port {{ squid_http.port }} {% if squid_http.options is defined %}{{ squid_http.options }}{% endif %}
+{% if squid_http.intercept is defined and squid_http.intercept %}
+
+http_port {{ squid_http.intercept_port }} intercept
+{% endif %}
+
+# HTTPS
+{% if squid_https is defined and squid_https.enabled %}
+https_port {{ squid_https.port }} {% if squid_https.intercept %}intercept{% endif %} {% if squid_https.ssl_bump %}ssl-bump{% endif %} generate-host-certificates={{ squid_https.generate_host_certificates}} dynamic_cert_mem_cache_size={{ squid_https.dynamic_cert_mem_cache_size }} tls-cert={{ squid_https.tls_cert_path }} tls-key={{ squid_https.tls_key_path }}
+{% endif %}
+
+# SSL BUMP
+{% if squid_ssl_bump is defined and squid_ssl_bump != [] %}
+{%   for item in squid_ssl_bump %}
+ssl_bump {{ item['action'] }} {{ item['acl'] }}
+{%   endfor %}
+
+# SSL certificate generation
+sslcrtd_program {{ squid_sslcrtd_program }}
+sslcrtd_children {{ squid_sslcrtd_children }}
+{% endif %}
+
+# CACHE PEERING
 {% if squid_cache_peering %}
 icp_access allow {{ squid_icp_access }}
 icp_port {{ squid_icp_port }}
 {% endif %}
-{% if (squid_transparent_proxy is defined and not squid_transparent_proxy) or squid_transparent_proxy is not defined %}
-http_port {{ squid_http_port }}
-{% elif squid_transparent_proxy is defined and squid_transparent_proxy %}
-http_port {{ squid_http_port }} transparent
-{% endif %}
-
-{% if squid_https_enabled is defined and squid_https_enabled %}
-https_port {{ squid_https_port }} cert={{ squid_cert_filename }} key={{ squid_key_filename }}
-{% endif %}
-
-{% if squid_cache_peering %}
+{% if squid_cache_peer != [] %}
 {%   for item in squid_cache_peer %}
 {%     if item.host != ansible_hostname and item.domain is defined %}
 cache_peer {{ item.host }}.{{ item.domain}} {{ item.type }} {{ item.proxy_port}} {{ item.icp_port }} {{ item.options }}
@@ -93,8 +101,22 @@ cache_peer {{ item.host }} {{ item.type }} {{ item.proxy_port}} {{ item.icp_port
 {%   endfor %}
 {% endif %}
 
+{% if squid_never_direct != [] %}
+# NEVER DIRECT
+{%   for item in squid_never_direct %}
+never_direct {{ item['action'] }} {{ item['acl'] }}
+{% endfor %}
+{% endif %}
+
+{% if squid_always_direct != [] %}
+# ALWAYS DIRECT
+{%   for item in squid_always_direct %}
+always_direct {{ item['action'] }} {{ item['acl'] }}
+{% endfor %}
+{% endif %}
+
 {% if squid_shutdown_lifetime is defined %}
-shutdown_lifetime {{squid_shutdown_lifetime}}{% else %}
+shutdown_lifetime {{ squid_shutdown_lifetime }}
 {% endif %}
 
 {% if (squid_suppress_version is defined and squid_suppress_version) or squid_suppress_version is not defined %}
