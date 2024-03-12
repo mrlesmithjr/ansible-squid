@@ -36,3 +36,19 @@
   loop: "{{ squid_config_files }}"
   become: true
   notify: "restart {{ squid_service }}"
+
+- name: SSL database configuration
+  when: squid_ssl_bump is defined and squid_ssl_bump != []
+  block:
+    - name: config_squid | Initialize the SSL database to be used by squid
+      ansible.builtin.command: "{{ squid_security_file_certgen }} -c -s {{ squid_ssl_database }} -M 4MB"
+      args:
+        creates: "{{ squid_ssl_database }}"
+
+    - name: Give rights to squid on SSL database
+      ansible.builtin.file:
+        path: "{{ squid_ssl_database }}"
+        state: directory
+        recurse: yes
+        owner: squid
+        group: squid

@@ -21,6 +21,9 @@ squid_acl:
   - name: CONNECT
     type: method
     arg: CONNECT
+  - name: local_domains
+    type: dstdomain
+    arg: local-domain.example
 
 # Adapt to list your (internal) IP networks from where browsing
 # should be allowed
@@ -72,8 +75,12 @@ squid_cache_peer:
   #   icp_port: "{{ squid_icp_port }}"
   #   options: default
 
+# cache peering
 squid_cache_peering: false
+squid_icp_access: all
+squid_icp_port: 3130
 
+# ACLs
 squid_http_access:
   - action: deny
     acl:
@@ -99,7 +106,11 @@ squid_http_access:
     acl:
       - all
 
-squid_http_port: 3128
+squid_http:
+  port: 3128
+  # options: "accel vhost allow-direct"
+  intercept: false
+  intercept_port: 8080
 
 # Define if squid should listen over HTTPS, as well as certificate files to be used
 # NOTE: If you plan to enable it, you're supposed to generate certificates by yourself
@@ -107,14 +118,16 @@ squid_http_port: 3128
 #       As a suggestion, you could use a selfsigned certificate if proxy will listen'
 #       on a private IP, or use a automated script (like certbot) to generate valid
 #       public certificate.
-squid_https_enabled: false
-squid_https_port: 3129
-squid_cert_filename: /etc/squid/cert.pem
-squid_key_filename: /etc/squid/cert.key
+squid_https:
+  enabled: false
+  port: 3129
+  tls_cert_path: /etc/squid/cert.pem
+  tls_key_path: /etc/squid/cert.key
+  intercept: false
+  ssl_bump: true
+  generate_host_certificates: "on"
+  dynamic_cert_mem_cache_size: 4MB
 
-squid_icp_access: all
-
-squid_icp_port: 3130
 
 # Define primary domain name
 squid_pri_domain_name: example.org
@@ -145,9 +158,6 @@ squid_refresh_patterns:
     percent: 20%
     max: 4320
 
-# Defines if squid should function in transparent mode
-squid_transparent_proxy: false
-
 # Defines if squid transparent should configure ferm firewall for masquerading
 squid_transparent_proxy_ferm: false
 
@@ -156,6 +166,32 @@ squid_shutdown_lifetime: 30 seconds
 
 # Defines if squid version might be suppressed on error messages
 squid_suppress_version: true
+
+# https://www.squid-cache.org/Versions/v5/cfgman/never_direct.html
+squid_never_direct: []
+# squid_never_direct:
+#   - action: deny
+#     acl: local_domains
+#   - action: allow
+#     acl: all
+
+# https://www.squid-cache.org/Versions/v5/cfgman/always_direct.html
+squid_always_direct: []
+# squid_always_direct:
+#   - action: allow
+#     acl: local_domains
+#   - action: deny
+#     acl: all
+
+# just tunnel (no decryption) on SSL request header match
+# squid_ssl_bump:
+#   - action: splice
+#     acl: all
+
+squid_ssl_database: "/var/spool/squid/ssl_db"
+squid_security_file_certgen: "/usr/lib64/squid/security_file_certgen"
+squid_sslcrtd_program: "{{ squid_security_file_certgen }} -s {{ squid_ssl_database }} -M 64MB"
+squid_sslcrtd_children: 32 startup=5 idle=1
 
 # Supply extra configuration - eg lists of domains or IPs
 # These are templated so can be populated with values from Ansible
