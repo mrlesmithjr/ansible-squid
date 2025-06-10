@@ -37,7 +37,7 @@ python-dateutil==2.8.2 ; python_full_version >= "3.8.1" and python_version < "4.
 python-slugify==8.0.1 ; python_full_version >= "3.8.1" and python_version < "4.0"
 pywin32==306 ; python_full_version >= "3.8.1" and python_version < "4.0" and sys_platform == "win32"
 pyyaml==6.0 ; python_full_version >= "3.8.1" and python_version < "4.0"
-requests==2.31.0 ; python_full_version >= "3.8.1" and python_version < "4.0"
+requests==2.32.4 ; python_full_version >= "3.8.1" and python_version < "4.0"
 resolvelib==0.8.1 ; python_full_version >= "3.8.1" and python_version < "4.0"
 rich==13.3.5 ; python_full_version >= "3.8.1" and python_version < "4.0"
 selinux==0.2.1 ; python_full_version >= "3.8.1" and python_version < "4.0" and (sys_platform == "linux" or sys_platform == "linux2")
