@@ -1,2 +1,5 @@
+exclude_paths:
+  - .venv
+  - .github
 skip_list:
   - name[casing]

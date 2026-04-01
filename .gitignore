@@ -25,3 +25,4 @@ venv/
 .ionide
 
 .vscode/
+.ansible/
