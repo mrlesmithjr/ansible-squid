@@ -1,0 +1,5 @@
+# Python requirements for development
+-c requirements.txt
+ansible-lint>=24.0
+flake8
+pylint

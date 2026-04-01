@@ -9,7 +9,7 @@
   when: ansible_os_family == "Debian"
 
 - name: config_squid_transparent_proxy | ensuring ferm is installed (RedHat)
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: ferm
     state: present
   become: true

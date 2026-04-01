@@ -1,6 +1,6 @@
 ---
 - name: redhat | Installing Squid (Non-Fedora)
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     name: "{{ squid_package }}"
     state: present
   become: true
